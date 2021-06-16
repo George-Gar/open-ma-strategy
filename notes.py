@@ -182,3 +182,18 @@ def swap_trailing_stop(self):
                 '''
 
     
+    
+    
+'''conditionals within bearish bullish function
+
+
+#check if the swap candle was created yet
+    if self.swap_candle:
+        #check for bullish bearish swap candle  
+        if self.swap_candle['close'] > self.swap_candle['open']:
+            self.swap_candle_bullish = True
+        elif self.swap_candle['close'] < self.swap_candle['open']:
+            self.swap_candle_bullish = False
+            
+            
+            '''

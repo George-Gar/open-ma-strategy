@@ -35,6 +35,7 @@ class futures_methods:
         self.fifth_candle = 0.0
         self.ghost_candle = {}
         self.swap_candle = {} #fixed candle for swapping
+        self.open_ema = 0.0
         self.trend = ''
         #booleans
         self.in_trade = False
@@ -58,6 +59,8 @@ class futures_methods:
         self.price_above_mid = False
         self.doji = False #checks to see if the body of the candle is a doji
         self.new_open = False #detects when a new candle has opened
+        self.opened_above_ema = False # a boolean to check where the current candle opened
+        self.opened_below_ema = False # a boolean to check where the current candle opened
         #swap point & entry point & profit
         self.support = 0.0
         self.resistance = 0.0
@@ -122,6 +125,8 @@ class futures_methods:
         self.swap_trail_trigger = 2.00 
         self.current_copy = pd.DataFrame()
         self.new_open = False
+        self.opened_above_ema = False
+        self.opened_below_ema = False
         
 
     def delta(self, day):
@@ -198,6 +203,7 @@ class futures_methods:
 
             #calculate 2 day open moving average
             open_ema = ta.trend.EMAIndicator(self.bars_frame['open'], 2).ema_indicator()
+            self.open_ema = open_ema
             
             #assign candles of data frame
             self.current_candle = bars_frame.iloc[3]
@@ -268,13 +274,17 @@ class futures_methods:
         elif self.first_candle['close'] < self.first_candle['open']:
             self.bullish = False
         
-        #check if the swap candle was created yet
-        if self.swap_candle:
-            #check for bullish bearish swap candle  
-            if self.swap_candle['close'] > self.swap_candle['open']:
-                self.swap_candle_bullish = True
-            elif self.swap_candle['close'] < self.swap_candle['open']:
-                self.swap_candle_bullish = False
+        #check if candle opened above or below ema open 2
+        if self.current_candle['open'] > self.open_ema.iloc[-1]:
+            self.opened_above_ema = True
+            self.opened_below_ema = False
+        elif self.current_candle['open'] < self.open_ema.iloc[-1]:
+            self.opened_below_ema = True
+            self.opened_above_ema = False
+        else:
+            self.opened_above_ema = False
+            self.opened_below_ema = False
+        
         #check if previous candle is a doji
         self.Doji()
         #create the ghost candle
@@ -729,7 +739,7 @@ class futures_methods:
 if __name__ == '__main__':
     r = futures_methods('MNQM21')
     print(r.get_bars('min'))
-    print(r.current_copy.empty)
+    print(r.open_ema.iloc[-1])
     # print(type(r.first_candle['body']))
     # for bars in r.bars_frame.iterrows():
     #     print(bars)
