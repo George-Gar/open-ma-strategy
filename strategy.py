@@ -63,30 +63,30 @@ class Strategy(fm):
             if self.in_trade and self.swap_count % 2 == 0:
                 
                 if self.opened_above_ema and self.current_price < self.open_ema.iloc[-1]:
+                    print('swapped')
                     self.swap()
                 elif self.opened_below_ema and self.current_price > self.open_ema.iloc[-1]:
+                    print('swapped')
                     self.swap()
             
             elif self.in_trade and self.swap_count % 2 != 0:
                 
-                if self.opened_above_ema and self.current_price > self.current_candle['open']:
+                if self.opened_above_ema and self.current_price > self.swap_candle['open']:
+                    print('swapped')
                     self.swap()
-                elif self.opened_below_ema and self.current_price < self.current_candle['open']:
+                elif self.opened_below_ema and self.current_price < self.swap_candle['open']:
+                    print('swapped')
                     self.swap()
 
 
 
-            # #check to insert trailing stop on initial trade
-            # if self.profit_seen and not self.in_swap:
-            #     self.trailing_stop()
-            # #check to insert trailing swap
-            # elif self.swap_trail_trigger_seen and not self.trailing:
-            #     self.swap_trailing_stop('profit')
-            #     print('trigger seen') 
+            #check to insert trailing stop on initial trade
+            if self.profit_seen and not self.in_swap:
+                self.trailing_stop() 
             
             # #when in swap check that previous candle forms above the break_even point before taking profit/adding trailstop/stop_loss
-            # if self.profit >= self.current_shares * 3 and self.in_swap:
-            #     self.take_profit()
+            if self.profit >= self.current_shares * 3 and self.in_swap:
+                self.take_profit()
 
             #make a copy of the current candle to determine entry point
             self.current_copy = self.current_candle

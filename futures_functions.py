@@ -275,15 +275,16 @@ class futures_methods:
             self.bullish = False
         
         #check if candle opened above or below ema open 2
-        if self.current_candle['open'] > self.open_ema.iloc[-1]:
-            self.opened_above_ema = True
-            self.opened_below_ema = False
-        elif self.current_candle['open'] < self.open_ema.iloc[-1]:
-            self.opened_below_ema = True
-            self.opened_above_ema = False
-        else:
-            self.opened_above_ema = False
-            self.opened_below_ema = False
+        if not self.in_trade:
+            if self.current_candle['open'] > self.open_ema.iloc[-1]:
+                self.opened_above_ema = True
+                self.opened_below_ema = False
+            elif self.current_candle['open'] < self.open_ema.iloc[-1]:
+                self.opened_below_ema = True
+                self.opened_above_ema = False
+            else:
+                self.opened_above_ema = False
+                self.opened_below_ema = False
         
         #check if previous candle is a doji
         self.Doji()
@@ -566,7 +567,7 @@ class futures_methods:
             self.new_open = False
             self.current_copy = self.current_candle
             #create a swap candle
-            self.swap_candle = self.ghost_candle
+            self.swap_candle = self.current_candle
         return request
 
 

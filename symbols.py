@@ -23,7 +23,7 @@ if __name__ == '__main__':
         # print(f'\nloss: {self.loss}')
         # print(f'\n{self.trend} trend')
         # print(f'trigger seen: {mnqm21.swap_trail_trigger_seen}')
-        print(mnqm21.new_open)
+        print(f'above: {mnqm21.opened_above_ema} below: {mnqm21.opened_below_ema}')
         # print(mnqm21.swap_trail_trigger_seen)
         # print(f'swap count: {mnqm21.swap_count}')
         # print(f'mid point: {mnqm21.ghost_candle["midpoint"]}')
@@ -47,6 +47,6 @@ if __name__ == '__main__':
             # print(mymm21.in_trade)
             # print(f"PRICE:{mymm21.current_price}, OPEN: {mymm21.swap_candle['open']}, CLOSE: {mymm21.swap_candle['close']}, High: {mymm21.swap_candle['high']}, LOW: {mymm21.swap_candle['low']}" )
             # print(mymm21.current_shares)
-        time.sleep(1)
+        # time.sleep(1)
 
         
