@@ -24,140 +24,142 @@ class Strategy(fm):
             
         
         
-            #check for entry 
-            if not self.in_trade and not self.open_positions and not self.doji:
-                # #if inside of candle
-                if self.bullish and self.open_inside and self.price_inside:
+            # #check for entry 
+            # if not self.in_trade and not self.open_positions and not self.doji:
+            #     # #if inside of candle
+            #     if self.bullish and self.open_inside and self.price_inside:
 
-                    #buy
-                    if self.current_price > self.ghost_candle['close']:                      
-                        self.is_long = True
-                        self.send_order('initial', 'buy', self.shares)
-                        print(f'\nTraded Long @ {self.current_price} swap price is {self.support}')
-                        return
+            #         #buy
+            #         if self.current_price > self.ghost_candle['close']:                      
+            #             self.is_long = True
+            #             self.send_order('initial', 'buy', self.shares)
+            #             print(f'\nTraded Long @ {self.current_price} swap price is {self.support}')
+            #             return
 
-                    #sell
-                    elif self.current_price < self.ghost_candle['open']:
-                        self.is_long = False
-                        self.send_order('initial', 'sell', self.shares)
-                        print(f'\nTraded short @ {self.current_price} swap price is {self.resistance}')
-                        return
+            #         #sell
+            #         elif self.current_price < self.ghost_candle['open']:
+            #             self.is_long = False
+            #             self.send_order('initial', 'sell', self.shares)
+            #             print(f'\nTraded short @ {self.current_price} swap price is {self.resistance}')
+            #             return
                 
-                elif not self.bullish and self.open_inside and self.price_inside:
+            #     elif not self.bullish and self.open_inside and self.price_inside:
 
-                    #buy
-                    if self.current_price > self.ghost_candle['open']:
-                        self.is_long = True
-                        self.send_order('initial', 'buy', self.shares)
-                        print(f'\nTraded Long @ {self.current_price} swap price is {self.support}')
-                        return
+            #         #buy
+            #         if self.current_price > self.ghost_candle['open']:
+            #             self.is_long = True
+            #             self.send_order('initial', 'buy', self.shares)
+            #             print(f'\nTraded Long @ {self.current_price} swap price is {self.support}')
+            #             return
                    
-                    #sell
-                    elif self.current_price < self.ghost_candle['close']:
-                        self.is_long = False
-                        self.send_order('initial', 'sell', self.shares)
-                        print(f'\nTraded short @ {self.current_price} swap price is {self.resistance}')
-                        return
+            #         #sell
+            #         elif self.current_price < self.ghost_candle['close']:
+            #             self.is_long = False
+            #             self.send_order('initial', 'sell', self.shares)
+            #             print(f'\nTraded short @ {self.current_price} swap price is {self.resistance}')
+            #             return
                 
-                #if outside of candle
-                elif self.bullish and not self.open_inside and self.crossed:
+            #     #if outside of candle
+            #     elif self.bullish and not self.open_inside and self.crossed:
 
-                    #buy
-                    if self.current_price > self.ghost_candle['close']:
-                        self.is_long = True
-                        self.send_order('initial', 'buy', self.shares)                       
-                        print(f'\nTraded Long @ {self.current_price} swap price is {self.support}')
-                        return
+            #         #buy
+            #         if self.current_price > self.ghost_candle['close']:
+            #             self.is_long = True
+            #             self.send_order('initial', 'buy', self.shares)                       
+            #             print(f'\nTraded Long @ {self.current_price} swap price is {self.support}')
+            #             return
 
-                    #sell
-                    elif self.current_price < self.ghost_candle['open']:
-                        self.is_long = False
-                        self.send_order('initial', 'sell', self.shares)
-                        print(f'\nTraded short @ {self.current_price} swap price is {self.resistance}')
-                        return
+            #         #sell
+            #         elif self.current_price < self.ghost_candle['open']:
+            #             self.is_long = False
+            #             self.send_order('initial', 'sell', self.shares)
+            #             print(f'\nTraded short @ {self.current_price} swap price is {self.resistance}')
+            #             return
 
-                elif not self.bullish and not self.open_inside and self.crossed:
+            #     elif not self.bullish and not self.open_inside and self.crossed:
 
-                    #buy
-                    if self.current_price > self.ghost_candle['open']:
-                        self.is_long = True
-                        self.send_order('initial', 'buy', self.shares)                       
-                        print(f'\nTraded Long @ {self.current_price} swap price is {self.support}')
+            #         #buy
+            #         if self.current_price > self.ghost_candle['open']:
+            #             self.is_long = True
+            #             self.send_order('initial', 'buy', self.shares)                       
+            #             print(f'\nTraded Long @ {self.current_price} swap price is {self.support}')
                     
-                    #sell
-                    elif self.current_price < self.ghost_candle['close']:
-                        self.is_long = False
-                        self.send_order('initial', 'sell', self.shares)
-                        print(f'\nTraded short @ {self.current_price} swap price is {self.resistance}')
-                        return
+            #         #sell
+            #         elif self.current_price < self.ghost_candle['close']:
+            #             self.is_long = False
+            #             self.send_order('initial', 'sell', self.shares)
+            #             print(f'\nTraded short @ {self.current_price} swap price is {self.resistance}')
+            #             return
 
                
-                #midpoint entries
-                if self.bullish and self.below_midpoint and self.price_below_mid:
+            #     #midpoint entries
+            #     if self.bullish and self.below_midpoint and self.price_below_mid:
 
-                    #buy
-                    if self.current_price > self.ghost_candle['midpoint']:
-                        self.is_long = True
-                        self.send_order('initial', 'buy', self.shares)
-                        self.traded_mid = True
-                        print(f'\nTraded Long @ {self.current_price} swap price is {self.support}')
-                        return
+            #         #buy
+            #         if self.current_price > self.ghost_candle['midpoint']:
+            #             self.is_long = True
+            #             self.send_order('initial', 'buy', self.shares)
+            #             self.traded_mid = True
+            #             print(f'\nTraded Long @ {self.current_price} swap price is {self.support}')
+            #             return
             
                 
-                elif not self.bullish and self.above_midpoint and self.price_above_mid:
+            #     elif not self.bullish and self.above_midpoint and self.price_above_mid:
 
-                    #sell
-                    if self.current_price < self.ghost_candle['midpoint']:
-                        self.is_long = False
-                        self.send_order('initial', 'sell', self.shares)
-                        self.traded_mid = True
-                        print(f'\nTraded short @ {self.current_price} swap price is {self.support}')
-                        return
+            #         #sell
+            #         if self.current_price < self.ghost_candle['midpoint']:
+            #             self.is_long = False
+            #             self.send_order('initial', 'sell', self.shares)
+            #             self.traded_mid = True
+            #             print(f'\nTraded short @ {self.current_price} swap price is {self.support}')
+            #             return
 
-                #midpoint entries for crosses
-                elif self.bullish and self.above_midpoint and self.midpoint_crossed:
+            #     #midpoint entries for crosses
+            #     elif self.bullish and self.above_midpoint and self.midpoint_crossed:
 
-                    #buy
-                    if self.current_price > self.ghost_candle['midpoint']:
-                        self.is_long = True
-                        self.send_order('initial', 'buy', self.shares)
-                        self.traded_mid = True
-                        print(f'\nTraded Long @ {self.current_price} swap price is {self.support}')
-                        return
+            #         #buy
+            #         if self.current_price > self.ghost_candle['midpoint']:
+            #             self.is_long = True
+            #             self.send_order('initial', 'buy', self.shares)
+            #             self.traded_mid = True
+            #             print(f'\nTraded Long @ {self.current_price} swap price is {self.support}')
+            #             return
 
                         
                 
-                elif not self.bullish and self.below_midpoint and self.midpoint_crossed: 
+            #     elif not self.bullish and self.below_midpoint and self.midpoint_crossed: 
 
-                    #sell
-                    if self.current_price < self.ghost_candle['midpoint']:
-                        self.is_long = False
-                        self.send_order('initial', 'sell', self.shares)
-                        self.traded_mid = True
-                        print(f'\nTraded short @ {self.current_price} swap price is {self.support}')
-                        return  
+            #         #sell
+            #         if self.current_price < self.ghost_candle['midpoint']:
+            #             self.is_long = False
+            #             self.send_order('initial', 'sell', self.shares)
+            #             self.traded_mid = True
+            #             print(f'\nTraded short @ {self.current_price} swap price is {self.support}')
+            #             return  
 
                           
             
            
            
-            #check for swap if we didn't see the swap trigger in profit
-            if self.in_trade:
-                self.swap_trailing_stop('loss')
+            # #check for swap if we didn't see the swap trigger in profit
+            # if self.in_trade:
+            #     self.swap_trailing_stop('loss')
 
 
-            #check to insert trailing stop on initial trade
-            if self.profit_seen and not self.in_swap:
-                self.trailing_stop()
-            #check to insert trailing swap
-            elif self.swap_trail_trigger_seen and not self.trailing:
-                self.swap_trailing_stop('profit')
-                print('trigger seen') 
+            # #check to insert trailing stop on initial trade
+            # if self.profit_seen and not self.in_swap:
+            #     self.trailing_stop()
+            # #check to insert trailing swap
+            # elif self.swap_trail_trigger_seen and not self.trailing:
+            #     self.swap_trailing_stop('profit')
+            #     print('trigger seen') 
             
-            #when in swap check that previous candle forms above the break_even point before taking profit/adding trailstop/stop_loss
-            if self.profit >= self.current_shares * 3 and self.in_swap:
-                self.take_profit()
+            # #when in swap check that previous candle forms above the break_even point before taking profit/adding trailstop/stop_loss
+            # if self.profit >= self.current_shares * 3 and self.in_swap:
+            #     self.take_profit()
 
+            #make a copy of the current candle to determine entry point
+            self.current_copy = self.current_candle
             #time.sleep(1)
 
 

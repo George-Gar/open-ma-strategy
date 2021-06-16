@@ -27,6 +27,7 @@ class futures_methods:
         #previous candles & trend
         self.bars_frame = {} #data frame of all bars
         self.current_candle = 0.0
+        self.current_copy = '0.0' #don't make this == to first candle on init
         self.first_candle = 0.0
         self.second_candle = 0.0
         self.third_candle = 0.0
@@ -56,6 +57,7 @@ class futures_methods:
         self.price_below_mid = False
         self.price_above_mid = False
         self.doji = False #checks to see if the body of the candle is a doji
+        self.new_open = False #detects when a new candle has opened
         #swap point & entry point & profit
         self.support = 0.0
         self.resistance = 0.0
@@ -118,6 +120,8 @@ class futures_methods:
         self.swap_trailing_point = 2.00
         self.swap_trail_ceiling = 0.0
         self.swap_trail_trigger = 2.00 
+        self.current_copy = '0.0'
+        self.new_open = False
         
 
     def delta(self, day):
@@ -200,6 +204,10 @@ class futures_methods:
             self.first_candle = bars_frame.iloc[2]
             self.second_candle = bars_frame.iloc[1]
             self.third_candle = bars_frame.iloc[0]
+
+            #check if a new candle has opened
+            if self.first_candle == self.current_copy:
+                self.new_open = True
 
             return open_ema
 
@@ -543,6 +551,9 @@ class futures_methods:
             #create the channel and increment shares in the case we need to swap
             self.in_trade = True
             self.current_shares = shares
+            #reset new open to false
+            self.new_open = False
+            #create a swap candle
             self.swap_candle = self.ghost_candle
         return request
 
