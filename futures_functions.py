@@ -552,8 +552,9 @@ class futures_methods:
             #create the channel and increment shares in the case we need to swap
             self.in_trade = True
             self.current_shares = shares
-            #reset new open to false
+            #reset new open to false and copy to current candle
             self.new_open = False
+            self.current_copy = self.current_candle
             #create a swap candle
             self.swap_candle = self.ghost_candle
         return request

@@ -25,16 +25,16 @@ class Strategy(fm):
         
         
             # #check for entry 
-            # if not self.in_trade and not self.open_positions and not self.doji:
+            if not self.in_trade and not self.open_positions and self.new_open:
             #     # #if inside of candle
             #     if self.bullish and self.open_inside and self.price_inside:
 
-            #         #buy
-            #         if self.current_price > self.ghost_candle['close']:                      
-            #             self.is_long = True
-            #             self.send_order('initial', 'buy', self.shares)
-            #             print(f'\nTraded Long @ {self.current_price} swap price is {self.support}')
-            #             return
+                    #buy
+                    # if self.current_price > self.ghost_candle['close']:                      
+                self.is_long = True
+                self.send_order('initial', 'buy', self.shares)
+                print(f'\nTraded Long @ {self.current_price} swap price is {self.support}')
+                return
 
             #         #sell
             #         elif self.current_price < self.ghost_candle['open']:
