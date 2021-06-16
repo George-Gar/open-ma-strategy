@@ -206,10 +206,10 @@ class futures_methods:
             self.open_ema = open_ema
             
             #assign candles of data frame
-            self.current_candle = bars_frame.iloc[3]
-            self.first_candle = bars_frame.iloc[2]
-            self.second_candle = bars_frame.iloc[1]
-            self.third_candle = bars_frame.iloc[0]
+            self.current_candle = bars_frame.iloc[1439]
+            self.first_candle = bars_frame.iloc[1438]
+            self.second_candle = bars_frame.iloc[1437]
+            self.third_candle = bars_frame.iloc[1436]
 
             #check if a new candle has opened
             if not self.current_copy.empty:
@@ -695,11 +695,8 @@ class futures_methods:
         self.fixed = False 
         #increment swap count
         self.swap_count += 1
-        #change trigger if swap count > 0
-        if self.swap_count > 0:
-            self.swap_trail_trigger = float(self.current_shares * 2)
         
-           
+                 
     def swap_trailing_stop(self, trigger):
         """ This function sets a 50% trailing stop on the swap trade's profit.
         profit will be the arg for when it hits the positive trigger and loss will be the negative trigger """
@@ -740,7 +737,7 @@ class futures_methods:
 if __name__ == '__main__':
     r = futures_methods('MNQM21')
     print(r.get_bars('min'))
-    print(r.open_ema.iloc[-1])
+    print(r.current_candle)
     # print(type(r.first_candle['body']))
     # for bars in r.bars_frame.iterrows():
     #     print(bars)

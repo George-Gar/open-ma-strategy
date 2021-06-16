@@ -37,7 +37,7 @@ class Strategy(fm):
                         return
 
                     #sell
-                    elif self.current_candle['open'] > self.open_ema.iloc[-1]:
+                    elif self.current_candle['open'] < self.open_ema.iloc[-1]:
                         self.is_long = False
                         self.send_order('initial', 'sell', self.shares)
                         print(f'\nTraded short @ {self.current_price} swap price is {self.resistance}')
@@ -53,7 +53,7 @@ class Strategy(fm):
                         return
                    
                     #sell
-                    elif self.current_candle['open'] > self.open_ema.iloc[-1]:
+                    elif self.current_candle['open'] < self.open_ema.iloc[-1]:
                         self.is_long = False
                         self.send_order('initial', 'sell', self.shares)
                         print(f'\nTraded short @ {self.current_price} swap price is {self.resistance}')
