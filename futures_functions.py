@@ -1,5 +1,6 @@
 import MetaTrader5 as mt5 
 import pandas as pd
+import ta
 import datetime
 import pytz
 import numpy as np
@@ -180,7 +181,7 @@ class futures_methods:
         """This function gets the bar data based on selected timeframe"""
 
         if timeframe == 'min':
-            bars = mt5.copy_rates_from_pos(self.symbol, mt5.TIMEFRAME_M1, 0, 4)
+            bars = mt5.copy_rates_from_pos(self.symbol, mt5.TIMEFRAME_M1, 0, 1440)
             # create DataFrame out of the obtained data
             bars_frame = pd.DataFrame(bars)
             # convert time in seconds into the datetime format
@@ -188,16 +189,19 @@ class futures_methods:
 
             #add body column to bars_frame
             bars_frame['body'] = bars_frame['high'] - bars_frame['low']
-            #assign df to a variable
-            self.bars_frame = bars_frame
+            #reverse dataframe and assign df to a variable
+            self.bars_frame = bars_frame[::-1]
+
+            #calculate 2 day open moving average
+            open_ema = ta.trend.EMAIndicator(self.bars_frame['open'], window=2).ema_indicator()
             
-            #assign candles
+            #assign candles of non reversed data frame
             self.current_candle = bars_frame.iloc[3]
             self.first_candle = bars_frame.iloc[2]
             self.second_candle = bars_frame.iloc[1]
             self.third_candle = bars_frame.iloc[0]
 
-            return bars_frame
+            return open_ema
 
         
     def s_r(self):
@@ -711,11 +715,11 @@ class futures_methods:
 
 if __name__ == '__main__':
     r = futures_methods('MYMM21')
-    r.get_bars('min')
+    print(r.get_bars('min'))
     # print(type(r.first_candle['body']))
     # for bars in r.bars_frame.iterrows():
     #     print(bars)
-    r.Doji()
+    # r.Doji()
     
     # print(r.ghost_candle)
     # r.bearish_bullish()
