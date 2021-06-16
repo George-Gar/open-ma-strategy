@@ -71,10 +71,10 @@ class Strategy(fm):
             
             elif self.in_trade and self.swap_count % 2 != 0:
                 
-                if self.opened_above_ema and self.current_price > self.swap_candle['open']:
+                if self.opened_above_ema and self.current_price > self.current_candle['open']:
                     print('swapped')
                     self.swap()
-                elif self.opened_below_ema and self.current_price < self.swap_candle['open']:
+                elif self.opened_below_ema and self.current_price < self.current_candle['open']:
                     print('swapped')
                     self.swap()
 
