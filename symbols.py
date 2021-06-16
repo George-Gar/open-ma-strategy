@@ -47,6 +47,6 @@ if __name__ == '__main__':
             # print(mymm21.in_trade)
             # print(f"PRICE:{mymm21.current_price}, OPEN: {mymm21.swap_candle['open']}, CLOSE: {mymm21.swap_candle['close']}, High: {mymm21.swap_candle['high']}, LOW: {mymm21.swap_candle['low']}" )
             # print(mymm21.current_shares)
-        # time.sleep(1)
+        time.sleep(1)
 
         

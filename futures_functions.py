@@ -27,7 +27,7 @@ class futures_methods:
         #previous candles & trend
         self.bars_frame = {} #data frame of all bars
         self.current_candle = 0.0
-        self.current_copy = '0.0' #don't make this == to first candle on init
+        self.current_copy = pd.DataFrame() #don't make this == to first candle on init
         self.first_candle = 0.0
         self.second_candle = 0.0
         self.third_candle = 0.0
@@ -120,7 +120,7 @@ class futures_methods:
         self.swap_trailing_point = 2.00
         self.swap_trail_ceiling = 0.0
         self.swap_trail_trigger = 2.00 
-        self.current_copy = '0.0'
+        self.current_copy = pd.DataFrame()
         self.new_open = False
         
 
@@ -206,8 +206,9 @@ class futures_methods:
             self.third_candle = bars_frame.iloc[0]
 
             #check if a new candle has opened
-            if self.first_candle == self.current_copy:
-                self.new_open = True
+            if not self.current_copy.empty:
+                if self.first_candle['high'] == self.current_copy['high'] and self.first_candle['low'] == self.current_copy['low']:
+                    self.new_open = True
 
             return open_ema
 
@@ -727,6 +728,7 @@ class futures_methods:
 if __name__ == '__main__':
     r = futures_methods('MNQM21')
     print(r.get_bars('min'))
+    print(r.current_copy.empty)
     # print(type(r.first_candle['body']))
     # for bars in r.bars_frame.iterrows():
     #     print(bars)
