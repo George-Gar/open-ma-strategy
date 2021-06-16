@@ -189,13 +189,13 @@ class futures_methods:
 
             #add body column to bars_frame
             bars_frame['body'] = bars_frame['high'] - bars_frame['low']
-            #reverse dataframe and assign df to a variable
-            self.bars_frame = bars_frame[::-1]
+            #assign df to a variable --> highest number is the most current index in this df
+            self.bars_frame = bars_frame
 
             #calculate 2 day open moving average
-            open_ema = ta.trend.EMAIndicator(self.bars_frame['open'], window=2).ema_indicator()
+            open_ema = ta.trend.EMAIndicator(self.bars_frame['open'], 2).ema_indicator()
             
-            #assign candles of non reversed data frame
+            #assign candles of data frame
             self.current_candle = bars_frame.iloc[3]
             self.first_candle = bars_frame.iloc[2]
             self.second_candle = bars_frame.iloc[1]
@@ -714,7 +714,7 @@ class futures_methods:
 
 
 if __name__ == '__main__':
-    r = futures_methods('MYMM21')
+    r = futures_methods('MNQM21')
     print(r.get_bars('min'))
     # print(type(r.first_candle['body']))
     # for bars in r.bars_frame.iterrows():
